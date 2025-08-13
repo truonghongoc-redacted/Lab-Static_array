@@ -1,0 +1,33 @@
+#include <iostream>
+using namespace std;
+
+// Tinh tong tu 1 den n
+void tinhTongSn(int& n) {
+	cout << "Nhap n: ";
+	cin >> n;
+	int sum = 0;
+	for (int i = 1; i <= n; i++) {
+		sum += i;
+	}
+	cout << "Ket qua tong khong de quy: " << sum << "\n";
+}
+
+// Tinh tong tu 1 den n bang de quy
+int tinhTongBangDeQuy(int n, int sum = 0) {
+	if (n == 0)
+		return sum;
+	return tinhTongBangDeQuy(n - 1, sum + n);
+}
+
+int main() {
+	int n;
+
+	// Tinh tong S(n) bang vong lap
+	tinhTongSn(n);
+	cout << "\n";
+
+	//Tinh tong S(n) bang de quy
+	cout << "Ket qua tong de quy: " << tinhTongBangDeQuy(n);
+
+	return 1;
+}
