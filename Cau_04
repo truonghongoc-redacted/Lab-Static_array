@@ -1,0 +1,26 @@
+#include <iostream>
+using namespace std;
+
+// Ham thong bao bang de quy
+void thongBao(int n) {
+	if (n == 0) return;
+	cout << "Hom nay toi di hoc CTDLTG buoi 1\n";
+	return thongBao(n - 1);
+}
+
+int main() {
+	int n;
+
+	//Thong bao bang de quy
+	do
+	{
+		cout << "Nhap n: ";
+		cin >> n;
+		if (n <= 0) {
+			cout << "Vui long nhap lai\n";
+		}
+	} while (n <= 0);
+	thongBao(n);
+
+	return 1;
+}
