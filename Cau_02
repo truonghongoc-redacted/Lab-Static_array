@@ -1,0 +1,88 @@
+#include <iostream>
+using namespace std;
+
+#define MAX 50
+
+void input(int arr[MAX], int& n) {
+	// Nhap so luong phan tu
+	do
+	{
+		cout << "Nhap so luong phan tu: ";
+		cin >> n;
+		if (n <= 0 || n > 50 || cin.fail()) {
+			cin.clear();
+			cin.ignore(1000, '\n');
+			cout << "So luong phan tu khong hop le, vui long nhap lai!\n";
+		}
+	} while (n <= 0 || n > 50 || cin.fail());
+
+	// Nhap phan tu
+	for (int i = 0; i < n; i++) {
+		cout << "Nhap phan tu thu [" << i + 1 << "]: ";
+		cin >> arr[i];
+	}
+}
+
+
+void output(int arr[MAX], const int n) {
+	cout << "Danh sach phan tu trong mang: \n";
+	for (int i = 0; i < n; i++) {
+		cout << arr[i] << "\t";
+	}
+	cout << "\n";
+}
+
+void sapXep(int arr[MAX], int chan[MAX], int le[MAX], int n) {
+	int soChan = 0; int soLe = 0;
+	for (int i = 0; i < n; i++) {
+		if (arr[i] % 2 == 0) {
+			chan[soChan++] = arr[i];
+		}
+		if (arr[i] % 2 != 0) {
+			le[soLe++] = arr[i];
+		}
+	}
+
+	// Sap xep so chan tang dan
+	for (int i = 0; i < soChan - 1; i++) {
+		for (int j = i + 1; j < soChan; j++) {
+			if (chan[i] > chan[j]) {
+				swap(chan[i], chan[j]);
+			}
+
+		}
+	}
+
+	// Sap xep so le giam dan
+	for (int i = 0; i < soLe - 1; i++) {
+		for (int j = i + 1; j < soLe; j++) {
+			if (le[i] < le[j]) {
+				swap(le[i], le[j]);
+			}
+		}
+	}
+
+	// Gop mang
+	int index = 0;
+	for (int i = 0; i < soChan; i++)
+		arr[index++] = chan[i];
+	for (int i = 0; i < soLe; i++)
+		arr[index++] = le[i];
+	output(arr, n);
+}
+
+int main() {
+	int arr[MAX], chan[MAX], le[MAX];
+	int n, x;
+	int i;
+
+	// Nhap phan tu
+	input(arr, n);
+
+	// Xuat phan tu
+	output(arr, n);
+
+	// Sap xep
+	sapXep(arr, chan, le, n);
+	return 1;
+}
