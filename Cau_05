@@ -1,0 +1,110 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+const int MAX = 100;
+
+struct Phim {
+    string tenPhim;
+    string theLoai;
+    string daoDien;
+    int namSX;
+};
+
+// Nhap thong tin cho 1 bo phim
+void nhapPhim(Phim& p) {
+    cout << "Nhap ten phim: ";
+    getline(cin, p.tenPhim);
+    cout << "Nhap the loai: ";
+    getline(cin, p.theLoai);
+    cout << "Nhap ten dao dien: ";
+    getline(cin, p.daoDien);
+    cout << "Nhap nam san xuat: ";
+    cin >> p.namSX;
+    cin.ignore(); 
+}
+
+// Nhap thong tin cho n bo phim
+void nhapDanhSachPhim(Phim dsPhim[], int n) {
+    for (int i = 0; i < n; ++i) {
+        cout << "\nNhap thong tin cho phim thu " << i + 1 << ":\n";
+        nhapPhim(dsPhim[i]);
+    }
+}
+
+// Xuat thong tin cho 1 bo phim
+void xuatPhim(const Phim& p) {
+    cout << "Ten phim: " << p.tenPhim << endl;
+    cout << "The loai: " << p.theLoai << endl;
+    cout << "Dao dien: " << p.daoDien << endl;
+    cout << "Nam san xuat: " << p.namSX << endl;
+}
+
+// Xuat thong tin cho n bo phim
+void xuatDanhSachPhim(Phim dsPhim[], int n) {
+    for (int i = 0; i < n; ++i) {
+        cout << "\nPhim thu " << i + 1 << ":\n";
+        xuatPhim(dsPhim[i]);
+    }
+}
+
+// Tim phim theo ten dao dien
+void timPhimTheoDaoDien(Phim dsPhim[], int n, const string& tenDaoDien) {
+    bool timThay = false;
+    for (int i = 0; i < n; ++i) {
+        if (dsPhim[i].daoDien == tenDaoDien) {
+            xuatPhim(dsPhim[i]);
+            cout << "-----------------------\n";
+            timThay = true;
+        }
+    }
+    if (!timThay) {
+        cout << "Tim khong thay\n";
+    }
+}
+
+// Sap xep phim theo nam san xuat tang dan
+void sapXepTheoNam(Phim dsPhim[], int n) {
+    for (int i = 0; i < n - 1; ++i) {
+        for (int j = i + 1; j < n; ++j) {
+            if (dsPhim[i].namSX > dsPhim[j].namSX) {
+               // Hoan doi 2 bo phim
+                Phim temp = dsPhim[i];
+                dsPhim[i] = dsPhim[j];
+                dsPhim[j] = temp;
+            }
+        }
+    }
+}
+
+int main() {
+    Phim danhSachPhim[MAX];
+    int n;
+
+    cout << "Nhap so luong phim: ";
+    cin >> n;
+    cin.ignore(); 
+
+    if (n < 1 || n > MAX) {
+        cout << "So luong phim khong hop le!" << endl;
+        return 1;
+    }
+
+    nhapDanhSachPhim(danhSachPhim, n);
+
+    cout << "\n=== Danh sach cac phim vua nhap ===\n";
+    xuatDanhSachPhim(danhSachPhim, n);
+
+    string tenDaoDien;
+    cout << "\nNhap ten dao dien can tim: ";
+    getline(cin, tenDaoDien);
+    cout << "\nDanh sach cac phim cua dao dien \"" << tenDaoDien << "\":\n";
+    timPhimTheoDaoDien(danhSachPhim, n, tenDaoDien);
+
+    sapXepTheoNam(danhSachPhim, n);
+    cout << "\n=== Danh sach phim sau khi sap xep theo nam san xuat ===\n";
+    xuatDanhSachPhim(danhSachPhim, n);
+
+    return 0;
+}
