@@ -1,0 +1,92 @@
+#include <iostream>
+#include <fstream>
+#include <cstdlib>  
+#include <ctime>   
+using namespace std;
+
+void GhiFileHoTenSV() {
+    int row, col;
+    cout << "Nhap so dong va cot: ";
+    cin >> row >> col;
+
+    if (row <= 0 || col <= 0) {
+        cout << "So dong va cot phai lon hon 0, vui long nhap lai!\n";
+        return;
+    }
+
+    int** A = new int* [row];
+    for (int i = 0; i < row; i++)
+        A[i] = new int[col];
+
+
+    srand(time(0));
+
+    for (int i = 0; i < row; i++)
+        for (int j = 0; j < col; j++)
+            A[i][j] = 20 + rand() % 16; 
+
+
+    ofstream fileOut("HoTenSV.txt");
+    fileOut << row << " " << col << endl;
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++)
+            fileOut << A[i][j] << " ";
+        fileOut << endl;
+    }
+    fileOut.close();
+
+    cout << "Ghi file thanh cong\n";
+
+    for (int i = 0; i < row; i++) delete[] A[i];
+    delete[] A;
+}
+
+void DocFileHoTenSV() {
+    ifstream fileIn("HoTenSV.txt");
+    if (!fileIn) {
+        cout << "Khong mo duoc file!\n";
+        return;
+    }
+
+
+    int row, col;
+
+    fileIn >> row >> col;
+
+
+    if (row <= 0 || col <= 0) {
+        cout << "Du lieu khong hop le\n";
+        return;
+    }
+
+    int** maTran = new int* [row];
+
+    for (int i = 0; i < row; i++)
+        maTran[i] = new int[col];
+
+
+    for (int i = 0; i < row; i++)
+        for (int j = 0; j < col; j++)
+            fileIn >> maTran[i][j];
+
+
+    cout << "\nNoi dung trong file:\n";
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++)
+            cout << maTran[i][j] << " ";
+        cout << endl;
+    }
+
+    fileIn.close();
+
+    for (int i = 0; i < row; i++) delete[] maTran[i];
+    delete[] maTran;
+}
+
+int main() {
+
+    GhiFileHoTenSV();
+    DocFileHoTenSV();
+
+    return 0;
+}
